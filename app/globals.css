@@ -2,22 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Immer dunkel — kein System-Theme-Switch */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  color-scheme: dark;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  /* bg-canvas und text-text kommen aus tailwind.config.ts */
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+/* React Flow: kein weißer Hintergrund */
+.react-flow__renderer {
+  background: transparent;
 }
 
 @layer utilities {
