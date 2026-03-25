@@ -1,5 +1,5 @@
 // Alle Mock-Daten zentral — keine Daten in Komponenten hartcodieren
-import { Contact, Redakteur, TopicNode, SearchScenario } from '@/types';
+import { Contact, Person, Redakteur, TopicNode, SearchScenario } from '@/types';
 
 // --- Redakteure ---
 
@@ -256,16 +256,327 @@ export const contacts: Contact[] = [
       },
     ],
   },
+
+  // --- Neue Kontakte: Szenario 1 Erweiterung (Vitamin Mangel – großes Netz) ---
+  {
+    id: 'c13',
+    name: 'Prof. Dr. Werner Scholz',
+    role: 'Ernährungswissenschaftler – TU Berlin',
+    type: 'expert',
+    expertise: ['Ernährungswissenschaft', 'Vitaminmangel', 'Mikronährstoffe', 'Klinische Studien'],
+    knownBy: ['r1', 'r2'],
+    email: 'w.scholz@tu-berlin.de',
+    phone: '+49 30 314 23456',
+    sourceNote: 'Lehrstuhlinhaber Ernährungswissenschaften, publiziert regelmäßig zu Vitaminmangel-Studien',
+    convHistory: [
+      {
+        id: 'cv13',
+        date: '2023-06-20',
+        redakteurId: 'r1',
+        redakteurName: 'Lea Ullmann',
+        summary: 'Hintergrundgespräch zur Metaanalyse über Vitaminmangel in der deutschen Bevölkerung. Scholz betont, dass Vitamin-D und B12 am häufigsten unterschätzt werden.',
+        articles: ['Vitaminmangel in Deutschland: Neue Studie alarmiert Experten'],
+      },
+      {
+        id: 'cv14',
+        date: '2024-03-10',
+        redakteurId: 'r2',
+        redakteurName: 'Markus Berger',
+        summary: 'Interview zur Zusammenarbeit mit der Vitamin-Industrie. Scholz äußert Bedenken über Interessenkonflikte in der Forschungsfinanzierung.',
+      },
+    ],
+  },
+  {
+    id: 'c14',
+    name: 'Sandra Kraus',
+    role: 'Ernährungsberaterin & Gesundheitsbloggerin',
+    type: 'person',
+    expertise: ['Ernährungsberatung', 'Vitamine', 'Vegane Ernährung', 'Social Media', 'Selbsterfahrung'],
+    knownBy: ['r1', 'r4'],
+    email: 's.kraus@vitalblog.de',
+    sourceNote: 'Betreibt Blog "VitalKitchen" mit 80.000 Lesern, selbst von Vitamin-D-Mangel betroffen',
+    convHistory: [
+      {
+        id: 'cv15',
+        date: '2024-01-05',
+        redakteurId: 'r1',
+        redakteurName: 'Lea Ullmann',
+        summary: 'Sandra berichtet über ihre eigene Diagnose und den Community-Effekt: Tausende Leser teilten ähnliche Erfahrungen nach ihrem Artikel über B12-Mangel.',
+        articles: ['Wenn der Körper schreit: Vitamin-B12-Mangel erkennen'],
+      },
+      {
+        id: 'cv16',
+        date: '2024-04-22',
+        redakteurId: 'r4',
+        redakteurName: 'Jonas Kiefer',
+        summary: 'Gespräch über Wellness-Trends in der Stadtszene. Sandra kritisiert unkritischen Vitamin-Hype in sozialen Medien.',
+      },
+    ],
+  },
+  {
+    id: 'c15',
+    name: 'Dr. Klaus Engel',
+    role: 'Allgemeinmediziner & Hausarzt',
+    type: 'expert',
+    expertise: ['Hausarztmedizin', 'Vitamindiagnostik', 'Blutbild', 'Prävention', 'Patientenaufklärung'],
+    knownBy: ['r1'],
+    email: 'dr.engel@hausarztpraxis-muenchen.de',
+    phone: '+49 89 456 1234',
+    sourceNote: 'Hausarzt in München-Schwabing, behandelt täglich Patienten mit Vitaminmangeldiagnosen',
+    convHistory: [
+      {
+        id: 'cv17',
+        date: '2023-12-05',
+        redakteurId: 'r1',
+        redakteurName: 'Lea Ullmann',
+        summary: 'Dr. Engel erklärt, warum Vitaminmangel im Blutbild oft spät erkannt wird. Kassenärzte haben nur begrenzte Budgets für Labordiagnostik.',
+        articles: ['Vitaminmangel: Warum der Arztbesuch zu spät kommt'],
+      },
+      {
+        id: 'cv18',
+        date: '2024-02-18',
+        redakteurId: 'r1',
+        redakteurName: 'Lea Ullmann',
+        summary: 'Follow-up zu Fallzahlen in seiner Praxis: 3 von 10 Patienten über 50 zeigen Vitamin-D-Werte unter dem Normbereich.',
+      },
+    ],
+  },
+  {
+    id: 'c16',
+    name: 'Karin Metz',
+    role: 'Leiterin Prävention – AOK Bayern',
+    type: 'institution',
+    expertise: ['Krankenkasse', 'Prävention', 'Gesundheitspolitik', 'Kassenleistungen', 'Vitaminprogramme'],
+    knownBy: ['r1', 'r3'],
+    email: 'k.metz@aok-bayern.de',
+    phone: '+49 89 627 00',
+    sourceNote: 'AOK Bayern ist größte Krankenkasse im Freistaat, Metz leitet Präventionsabteilung seit 2019',
+    convHistory: [
+      {
+        id: 'cv19',
+        date: '2023-09-15',
+        redakteurId: 'r1',
+        redakteurName: 'Lea Ullmann',
+        summary: 'Metz erklärt, warum die AOK Vitamin-D-Tests nur bei ärztlich begründetem Verdacht übernimmt. Debatte über Ausweitung der Kassenleistungen.',
+        articles: ['Krankenkassen und Vitamine: Was wird wirklich bezahlt?'],
+      },
+    ],
+  },
+  {
+    id: 'c17',
+    name: 'Julian Frick',
+    role: 'Health & Fitness Influencer (210k Follower)',
+    type: 'person',
+    expertise: ['Social Media', 'Fitness', 'Nahrungsergänzung', 'Health Marketing', 'Community'],
+    knownBy: ['r4', 'r2'],
+    email: 'julian@frickfit.de',
+    sourceNote: 'Instagram-Influencer @JulianFrickFit, hat Kooperation mit VitaBoost GmbH (c3) und promotet Vitamin-Supplements',
+    convHistory: [
+      {
+        id: 'cv20',
+        date: '2024-03-01',
+        redakteurId: 'r4',
+        redakteurName: 'Jonas Kiefer',
+        summary: 'Julian spricht über bezahlte Kooperationen mit Supplement-Herstellern. Transparenz-Debatte: Wie erkennbar sind Werbepostings?',
+        articles: ['Influencer und Vitamine: Werbung ohne Grenzen?'],
+      },
+      {
+        id: 'cv21',
+        date: '2024-04-10',
+        redakteurId: 'r2',
+        redakteurName: 'Markus Berger',
+        summary: 'VitaBoost-Kooperation aus Wirtschaftsperspektive: Julian bestätigt 5-stellige Monatshonorare. Markt für Influencer-Marketing im Supplement-Bereich boomt.',
+      },
+    ],
+  },
+  {
+    id: 'c18',
+    name: 'BioVit GmbH',
+    role: 'Hersteller – Vitamin-Kapseln & Nahrungsergänzung',
+    type: 'company',
+    expertise: ['Vitaminproduktion', 'Nahrungsergänzung', 'GMP-Zertifizierung', 'B2B-Handel', 'Einzelhandel'],
+    knownBy: ['r2'],
+    email: 'info@biovit-gmbh.de',
+    phone: '+49 89 100 2020',
+    sourceNote: 'Mittelständischer Hersteller aus dem Münchner Umland, beliefert u.a. Apotheken und Bioläden. Lieferant von Thomas Huber (c2).',
+    convHistory: [
+      {
+        id: 'cv22',
+        date: '2023-11-08',
+        redakteurId: 'r2',
+        redakteurName: 'Markus Berger',
+        summary: 'Interview mit Geschäftsführer Bernd Kohl: BioVit setzt auf regionale Rohstoffe und kritisiert Billigimporte aus Asien. Umsatz 2023 bei 12 Mio. Euro.',
+        articles: ['BioVit: Regionale Vitamine als Gegenentwurf zum Massenmarkt'],
+      },
+    ],
+  },
+];
+
+// --- Echte Personen aus Design-Sprint-Kurs ---
+
+export const persons: Person[] = [
+  {
+    id: 'p1',
+    name: 'Lukas Speidel',
+    role: 'UX Researcher – Praktikum bei Bosch',
+    type: 'student',
+    expertise: ['UX Research', 'Automotive', 'Hardware', 'Figma', 'Kontaktnetzwerke'],
+    knownBy: [],
+    email: 'lukas.speidel@student.hfg-gmuend.de',
+    sourceNote: 'Design-Sprint-Kurs 2026, Praktikum bei Robert Bosch GmbH (Abstatt)',
+    convHistory: [],
+    company: 'Robert Bosch GmbH',
+    companyIndustry: ['Automotive', 'Hardware & Sensoren', 'Industrietechnik'],
+    hometown: 'Tübingen',
+    favoriteDesignTool: 'Figma',
+    projectTheme: 'Kontaktnetzwerke im Kontext von Journalismus',
+    semester: 6,
+    studyProgram: 'Interaktionsgestaltung',
+    relatedPersonIds: ['p2', 'p5', 'p7', 'p8'],
+  },
+  {
+    id: 'p2',
+    name: 'Bruno Gross',
+    role: 'UI/UX Designer – Praktikum bei BMW',
+    type: 'student',
+    expertise: ['UI/UX Design', 'Automotive', 'Mobilität', 'TouchDesigner', 'Kontaktnetzwerke'],
+    knownBy: [],
+    email: 'bruno.gross@student.hfg-gmuend.de',
+    sourceNote: 'Design-Sprint-Kurs 2026, Praktikum bei BMW AG (München)',
+    convHistory: [],
+    company: 'Bayerische Motorenwerke AG (BMW)',
+    companyIndustry: ['Automotive', 'Mobilität', 'Elektromobilität'],
+    hometown: 'Dachau',
+    favoriteDesignTool: 'TouchDesigner',
+    projectTheme: 'Kontaktnetzwerke im Kontext von Journalismus',
+    semester: 6,
+    studyProgram: 'Interaktionsgestaltung',
+    relatedPersonIds: ['p1', 'p5', 'p7', 'p8'],
+  },
+  {
+    id: 'p3',
+    name: 'Annalena Stein',
+    role: 'UX/UI Designerin – Praktikum bei Carl Zeiss SMT',
+    type: 'student',
+    expertise: ['UX/UI Design', 'Medizintechnik', 'Optik', 'Circadianer Rhythmus', 'Gesundheit'],
+    knownBy: [],
+    email: 'annalena.stein@student.hfg-gmuend.de',
+    sourceNote: 'Design-Sprint-Kurs 2026, Praktikum bei Carl Zeiss SMT (Oberkochen)',
+    convHistory: [],
+    company: 'Carl Zeiss SMT GmbH',
+    companyIndustry: ['Medizintechnik', 'Optik', 'Halbleitertechnik'],
+    hometown: 'Abtsgmünd',
+    favoriteDesignTool: 'Figma',
+    projectTheme: 'Circadianer Rhythmus',
+    semester: 6,
+    studyProgram: 'Interaktionsgestaltung',
+    relatedPersonIds: ['p4', 'p7', 'p8'],
+  },
+  {
+    id: 'p4',
+    name: 'Lisa-Marie Rapp',
+    role: 'UI/UX Designerin – Praktikum bei Siegmund Design',
+    type: 'student',
+    expertise: ['UI/UX Design', 'Haustiergesundheit', 'Tierernährung', 'Produktdesign'],
+    knownBy: [],
+    email: 'lisa.rapp@student.hfg-gmuend.de',
+    sourceNote: 'Design-Sprint-Kurs 2026, Praktikum bei Siegmund Design GmbH (Stuttgart)',
+    convHistory: [],
+    company: 'Siegmund Design GmbH',
+    companyIndustry: ['Design', 'Produktgestaltung'],
+    hometown: 'Deggingen',
+    favoriteDesignTool: 'Figma & InDesign',
+    projectTheme: 'Haustiergesundheit und -haltung',
+    semester: 6,
+    studyProgram: 'Interaktionsgestaltung',
+    relatedPersonIds: ['p3'],
+  },
+  {
+    id: 'p5',
+    name: 'Jens Döring',
+    role: 'Designer – Praktikum bei 2av GmbH',
+    type: 'student',
+    expertise: ['Service Design', 'Design Education', 'Konzeptentwicklung'],
+    knownBy: [],
+    email: 'jens.doering@student.hfg-gmuend.de',
+    sourceNote: 'Design-Sprint-Kurs 2026, Praktikum bei 2av GmbH (Ulm)',
+    convHistory: [],
+    company: '2av GmbH',
+    companyIndustry: ['Design', 'Medien'],
+    hometown: 'Dresden',
+    favoriteDesignTool: 'Kopf',
+    projectTheme: 'Diverses',
+    semester: 77,
+    studyProgram: 'Design & Technology',
+    relatedPersonIds: ['p1', 'p2', 'p7'],
+  },
+  {
+    id: 'p6',
+    name: 'Maria Kamenskaya',
+    role: 'UX/UI Designerin – Praktikum bei forwerts',
+    type: 'student',
+    expertise: ['UX/UI Design', 'Forstwirtschaft', 'Umwelt', 'Nachhaltigkeit'],
+    knownBy: [],
+    email: 'maria.kamenskaya@student.hfg-gmuend.de',
+    sourceNote: 'Design-Sprint-Kurs 2026, Praktikum bei forwerts (Frankfurt)',
+    convHistory: [],
+    company: 'forwerts GmbH',
+    companyIndustry: ['Beratung', 'Nachhaltigkeit'],
+    hometown: 'Ibbenbüren (NRW)',
+    favoriteDesignTool: 'Figma',
+    projectTheme: 'Forstwirtschaft',
+    semester: 6,
+    studyProgram: 'Interaktionsgestaltung',
+    relatedPersonIds: [],
+  },
+  {
+    id: 'p7',
+    name: 'Lea Ullmann',
+    role: 'Ausstellungsgestalterin – Praktikum bei 2av',
+    type: 'student',
+    expertise: ['Ausstellungsgestaltung', 'Unverträglichkeiten', 'Morbus Crohn', 'Ernährung', 'Vitaminmangel'],
+    knownBy: [],
+    email: 'lea.ullmann@student.hfg-gmuend.de',
+    sourceNote: 'Design-Sprint-Kurs 2026, Praktikum bei 2av GmbH (Ulm). Persönliche Betroffenheit durch Ernährungsunverträglichkeiten.',
+    convHistory: [],
+    company: '2av GmbH',
+    companyIndustry: ['Design', 'Medien'],
+    hometown: 'Hegau',
+    favoriteDesignTool: 'Figma',
+    projectTheme: 'Unverträglichkeiten mit Morbus Crohn',
+    semester: 6,
+    studyProgram: 'Interaktionsgestaltung',
+    relatedPersonIds: ['p1', 'p2', 'p5', 'p8'],
+  },
+  {
+    id: 'p8',
+    name: 'Yasmin Hähnel',
+    role: 'UX/UI Designerin – Praktikum bei 21TORR',
+    type: 'student',
+    expertise: ['UX/UI Design', 'Unverträglichkeiten', 'Morbus Crohn', 'Ernährung', 'Yoga'],
+    knownBy: [],
+    email: 'yasmin.haehnel@student.hfg-gmuend.de',
+    sourceNote: 'Design-Sprint-Kurs 2026, Praktikum bei 21TORR GmbH (Stuttgart). Gleiche Herkunftsregion Hegau wie Lea Ullmann, gleiches Projektthema.',
+    convHistory: [],
+    company: '21TORR GmbH',
+    companyIndustry: ['Digital Marketing', 'UX/UI'],
+    hometown: 'Hegau',
+    favoriteDesignTool: 'Figma',
+    projectTheme: 'Unverträglichkeiten mit Morbus Crohn',
+    semester: 6,
+    studyProgram: 'Interaktionsgestaltung',
+    relatedPersonIds: ['p3', 'p7'],
+  },
 ];
 
 // --- Topic Nodes ---
 
 export const topicNodes: TopicNode[] = [
-  // Szenario 1: Vitamin Mangel
-  { id: 't1', label: 'Gesundheit', relatedTopics: ['t2', 't3', 't4'], contactIds: [], position: { x: 400, y: 300 } },
-  { id: 't2', label: 'Vitaminmangel', parentId: 't1', relatedTopics: ['t1', 't3'], contactIds: ['c1', 'c2', 'c4'], position: { x: 200, y: 150 } },
-  { id: 't3', label: 'Medikamente & Supplements', parentId: 't1', relatedTopics: ['t1', 't2', 't5'], contactIds: ['c2', 'c3'], position: { x: 600, y: 150 } },
-  { id: 't4', label: 'Haustiergesundheit', parentId: 't1', relatedTopics: ['t1'], contactIds: [], position: { x: 700, y: 400 } },
+  // Szenario 1: Vitamin Mangel (erweitertes Netzwerk)
+  { id: 't1', label: 'Gesundheit', relatedTopics: ['t2', 't3', 't4', 't17', 't18', 't19', 't20', 't21', 't22'], contactIds: [], position: { x: 400, y: 300 } },
+  { id: 't2', label: 'Vitaminmangel', parentId: 't1', relatedTopics: ['t1', 't3', 't17', 't18'], contactIds: ['c1', 'c2', 'c4', 'c13', 'c15', 'p7', 'p8'], position: { x: 200, y: 150 } },
+  { id: 't3', label: 'Medikamente & Supplements', parentId: 't1', relatedTopics: ['t1', 't2', 't5', 't20', 't21'], contactIds: ['c2', 'c3', 'c17', 'c18'], position: { x: 600, y: 150 } },
+  { id: 't4', label: 'Haustiergesundheit', parentId: 't1', relatedTopics: ['t1', 't22'], contactIds: ['p4'], position: { x: 700, y: 400 } },
 
   // Szenario 2: Vitamin Startup
   { id: 't5', label: 'Wirtschaft', relatedTopics: ['t6', 't7', 't8', 't9'], contactIds: [], position: { x: 400, y: 300 } },
@@ -279,6 +590,19 @@ export const topicNodes: TopicNode[] = [
   { id: 't11', label: 'Stadtrat', parentId: 't10', relatedTopics: ['t10', 't12'], contactIds: ['c9', 'c10'], position: { x: 200, y: 150 } },
   { id: 't12', label: 'Bauleitplanung', parentId: 't10', relatedTopics: ['t10', 't11', 't13'], contactIds: ['c10', 'c11', 'c12'], position: { x: 600, y: 150 } },
   { id: 't13', label: 'Verwaltung & Recht', parentId: 't10', relatedTopics: ['t10', 't12'], contactIds: ['c11', 'c12'], position: { x: 400, y: 500 } },
+
+  // Szenario 1 Erweiterung: Vitamin Mangel — große Netzwerk-Topics
+  { id: 't17', label: 'Ernährungswissenschaft', parentId: 't1', relatedTopics: ['t1', 't2', 't18'], contactIds: ['c1', 'c13', 'c14', 'p7', 'p8'], position: { x: 100, y: 300 } },
+  { id: 't18', label: 'Hausarztmedizin', parentId: 't1', relatedTopics: ['t1', 't17', 't19'], contactIds: ['c15', 'c4', 'p7'], position: { x: 300, y: 500 } },
+  { id: 't19', label: 'Krankenkassen & Prävention', parentId: 't1', relatedTopics: ['t1', 't18'], contactIds: ['c16', 'c1'], position: { x: 600, y: 500 } },
+  { id: 't20', label: 'Social Media & Health', parentId: 't1', relatedTopics: ['t1', 't3'], contactIds: ['c17', 'c14'], position: { x: 750, y: 300 } },
+  { id: 't21', label: 'Produktion & Hersteller', parentId: 't1', relatedTopics: ['t3', 't6'], contactIds: ['c18', 'c2'], position: { x: 500, y: 150 } },
+  { id: 't22', label: 'Haustiergesundheit', parentId: 't1', relatedTopics: ['t1', 't17'], contactIds: ['p4', 'p3'], position: { x: 700, y: 400 } },
+
+  // Szenario 4: Automotive (echte Personen)
+  { id: 't14', label: 'Industrie & Technologie', relatedTopics: ['t15', 't16'], contactIds: [], position: { x: 400, y: 300 } },
+  { id: 't15', label: 'Automotive', parentId: 't14', relatedTopics: ['t14', 't16'], contactIds: ['p1', 'p2'], position: { x: 200, y: 150 } },
+  { id: 't16', label: 'Hardware & Sensoren', parentId: 't14', relatedTopics: ['t14', 't15'], contactIds: ['p1', 'p3'], position: { x: 600, y: 150 } },
 ];
 
 // --- Suchszenarien ---
@@ -299,12 +623,24 @@ export const searchScenarios: SearchScenario[] = [
     topicIds: ['t10', 't11', 't12', 't13'],
     highlightedTopicId: 't10',
   },
+  {
+    query: 'Automotive',
+    topicIds: ['t14', 't15', 't16'],
+    highlightedTopicId: 't15',
+  },
 ];
 
 // --- Hilfsfunktionen ---
 
+// Alle Kontakte inkl. echte Personen — für einheitliche Lookup-Funktion
+export const allContacts: Contact[] = [...contacts, ...persons];
+
 export function getContactById(id: string): Contact | undefined {
-  return contacts.find((c) => c.id === id);
+  return allContacts.find((c) => c.id === id);
+}
+
+export function getPersonById(id: string): Person | undefined {
+  return persons.find((p) => p.id === id);
 }
 
 export function getTopicById(id: string): TopicNode | undefined {
@@ -321,6 +657,12 @@ export function getContactsForTopic(topicId: string): Contact[] {
   return topic.contactIds.map((id) => getContactById(id)).filter((c): c is Contact => !!c);
 }
 
+export function getRelatedPersons(personId: string): Person[] {
+  const person = getPersonById(personId);
+  if (!person) return [];
+  return person.relatedPersonIds.map((id) => getPersonById(id)).filter((p): p is Person => !!p);
+}
+
 export function findScenarioByQuery(query: string): SearchScenario | undefined {
   const lower = query.toLowerCase().trim();
   return searchScenarios.find((s) => s.query.toLowerCase().includes(lower) || lower.includes(s.query.toLowerCase()));
@@ -330,4 +672,5 @@ export const SEARCH_SUGGESTIONS = [
   'Vitamin Mangel',
   'Vitamin Startup',
   'Lokalpolitik',
+  'Automotive',
 ];

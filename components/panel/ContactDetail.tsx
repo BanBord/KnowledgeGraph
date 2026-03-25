@@ -1,11 +1,11 @@
 'use client';
 
 import {
-  Mail, Phone, FlaskConical, Building2, User, Newspaper, Calendar, FileText, ChevronLeft,
+  Mail, Phone, FlaskConical, Building2, User, Newspaper, Calendar, FileText, ChevronLeft, GraduationCap, MapPin, Briefcase,
 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { Tag, Avatar } from '@/components/ui';
-import { Contact, ContactType, Redakteur } from '@/types';
+import { Contact, ContactType, Person, Redakteur } from '@/types';
 import { redakteure } from '@/lib/mock-data';
 
 const TYPE_ICONS: Record<ContactType, React.ElementType> = {
@@ -14,6 +14,7 @@ const TYPE_ICONS: Record<ContactType, React.ElementType> = {
   company:     Building2,
   person:      User,
   journalist:  Newspaper,
+  student:     GraduationCap,
 };
 
 const TYPE_LABELS: Record<ContactType, string> = {
@@ -22,6 +23,7 @@ const TYPE_LABELS: Record<ContactType, string> = {
   company:     'Unternehmen',
   person:      'Person',
   journalist:  'Journalist',
+  student:     'Student',
 };
 
 const TYPE_COLORS: Record<ContactType, string> = {
@@ -30,6 +32,7 @@ const TYPE_COLORS: Record<ContactType, string> = {
   company:     'text-[#4fc97f] bg-[#4fc97f]/10 border-[#4fc97f]/30',
   person:      'text-[#f9a84f] bg-[#f9a84f]/10 border-[#f9a84f]/30',
   journalist:  'text-[#f94f4f] bg-[#f94f4f]/10 border-[#f94f4f]/30',
+  student:     'text-[#f9e44f] bg-[#f9e44f]/10 border-[#f9e44f]/30',
 };
 
 interface ContactDetailProps {
@@ -49,6 +52,9 @@ export function ContactDetail({ contact, onBack }: ContactDetailProps) {
   const Icon = TYPE_ICONS[contact.type] ?? User;
   const typeLabel = TYPE_LABELS[contact.type];
   const typeColorClass = TYPE_COLORS[contact.type];
+
+  // Für Personen-Profil: zusätzliche Felder prüfen
+  const person = contact.type === 'student' ? (contact as Person) : null;
 
   const knownByRedakteure = contact.knownBy
     .map((id) => redakteure.find((r) => r.id === id))
@@ -92,6 +98,33 @@ export function ContactDetail({ contact, onBack }: ContactDetailProps) {
 
       {/* Scrollbarer Inhalt */}
       <div className="flex-1 overflow-y-auto mt-4 space-y-5 pr-0.5">
+
+        {/* Student-Profil: Praktikum & Herkunft */}
+        {person && (
+          <div className="rounded-lg bg-surface2 border border-[#f9e44f]/20 p-3 space-y-2">
+            <div className="flex items-center gap-1.5 mb-1">
+              <GraduationCap size={11} className="text-[#f9e44f]" />
+              <span className="text-[10px] text-[#f9e44f] uppercase tracking-widest font-medium">
+                Design-Sprint-Kurs 2026
+              </span>
+            </div>
+            <div className="flex items-start gap-2">
+              <Briefcase size={12} className="text-textMuted mt-0.5 flex-shrink-0" />
+              <div>
+                <div className="text-xs text-text font-medium">{person.company}</div>
+                <div className="text-[11px] text-textMuted">{person.companyIndustry.join(', ')}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin size={12} className="text-textMuted flex-shrink-0" />
+              <span className="text-xs text-textMuted">{person.hometown}</span>
+            </div>
+            <div className="pt-1 border-t border-border/40">
+              <div className="text-[11px] text-textMuted">Projektthema</div>
+              <div className="text-xs text-text mt-0.5">{person.projectTheme}</div>
+            </div>
+          </div>
+        )}
 
         {/* Kontaktdaten — zuerst, wie in Figma */}
         {(contact.email || contact.phone) && (

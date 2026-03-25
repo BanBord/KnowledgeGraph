@@ -1,6 +1,6 @@
 'use client';
 
-import { FlaskConical, Building2, User, Newspaper, ChevronRight } from 'lucide-react';
+import { FlaskConical, Building2, User, Newspaper, ChevronRight, GraduationCap } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { Tag, Avatar } from '@/components/ui';
 import { Contact, ContactType, Redakteur } from '@/types';
@@ -12,6 +12,7 @@ const TYPE_ICONS: Record<ContactType, React.ElementType> = {
   company:     Building2,
   person:      User,
   journalist:  Newspaper,
+  student:     GraduationCap,
 };
 
 const TYPE_LABELS: Record<ContactType, string> = {
@@ -20,6 +21,7 @@ const TYPE_LABELS: Record<ContactType, string> = {
   company:     'Unternehmen',
   person:      'Person',
   journalist:  'Journalist',
+  student:     'Student',
 };
 
 const TYPE_COLORS: Record<ContactType, string> = {
@@ -28,6 +30,7 @@ const TYPE_COLORS: Record<ContactType, string> = {
   company:     'text-[#4fc97f]',
   person:      'text-[#f9a84f]',
   journalist:  'text-[#f94f4f]',
+  student:     'text-[#f9e44f]',
 };
 
 interface ContactCardProps {

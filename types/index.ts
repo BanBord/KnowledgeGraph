@@ -1,6 +1,6 @@
 // Alle TypeScript-Interfaces für das Redaktions-Netzwerk-Tool
 
-export type ContactType = 'expert' | 'institution' | 'company' | 'person' | 'journalist';
+export type ContactType = 'expert' | 'institution' | 'company' | 'person' | 'journalist' | 'student';
 
 export interface Contact {
   id: string;
@@ -28,6 +28,18 @@ export interface Redakteur {
   id: string;
   name: string;
   ressort: string;
+}
+
+export interface Person extends Contact {
+  type: 'student';
+  company: string;           // Praktikumsstelle
+  companyIndustry: string[]; // z.B. ['Automotive', 'Hardware']
+  hometown: string;
+  favoriteDesignTool?: string;
+  projectTheme: string;      // Thema im Design-Sprint
+  semester: number;
+  studyProgram: string;
+  relatedPersonIds: string[]; // Verbindungen zu anderen Personen im Kurs
 }
 
 export interface TopicNode {
