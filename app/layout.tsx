@@ -25,8 +25,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" className="dark">
+      <head>
+        {/* Anti-FOUC: Theme vor erstem Paint aus localStorage setzen */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark');}else{document.documentElement.classList.add('dark');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-canvas text-text min-h-screen`}
+        className={`
+          ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen
+          bg-canvas text-text
+          dark:bg-canvas dark:text-text
+          not-dark:bg-[#f5f3ef] not-dark:text-[#1a1814]
+        `}
       >
         {children}
       </body>

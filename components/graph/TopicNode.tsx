@@ -6,7 +6,7 @@ import { cn } from '@/lib/cn';
 import { TopicNodeData } from '@/types';
 
 export const TopicNode = memo(function TopicNode({ data, selected }: NodeProps) {
-  const { label, contactCount, isActive } = data as unknown as TopicNodeData;
+  const { label, contactCount, isActive, isHub } = data as unknown as TopicNodeData;
 
   return (
     <>
@@ -14,18 +14,23 @@ export const TopicNode = memo(function TopicNode({ data, selected }: NodeProps) 
 
       <div
         className={cn(
-          'px-4 py-3 rounded-xl border transition-all duration-200 cursor-pointer select-none',
-          'bg-nodeDefault border-border min-w-[120px] text-center',
+          'rounded-xl border transition-all duration-200 cursor-pointer select-none text-center',
+          'bg-nodeDefault',
+          // Hub-Nodes: größer, stärker
+          isHub ? 'px-5 py-3.5 min-w-[140px]' : 'px-4 py-3 min-w-[110px]',
           // Aktiver Zustand: Lila Glow
           isActive || selected
             ? 'border-accent shadow-[0_0_16px_rgba(124,106,247,0.35)] bg-surface'
-            : 'hover:border-border/80 hover:bg-surface',
+            : isHub
+              ? 'border-border/80 hover:border-accent/30 hover:bg-surface'
+              : 'border-border hover:border-border/80 hover:bg-surface',
         )}
       >
         <div
           className={cn(
-            'text-sm font-medium leading-tight',
-            isActive || selected ? 'text-text' : 'text-textMuted'
+            'font-medium leading-tight',
+            isHub ? 'text-sm' : 'text-[12px]',
+            isActive || selected ? 'text-text' : isHub ? 'text-text/80' : 'text-textMuted'
           )}
         >
           {label}

@@ -51,9 +51,17 @@ export interface TopicNodeData {
   topicId: string;
   contactCount: number;
   isActive: boolean;
+  isHub: boolean;            // true wenn kein parentId → Hub-Topic
 }
 
 export interface ContactNodeData {
   contact: Contact;
   isActive: boolean;
+  familiarityLevel: number;  // knownBy.length → Hintergrundfarbe-Wärme
+}
+
+// React Flow Edge-Daten-Typ
+export interface NetworkEdgeData {
+  active?: boolean;
+  weight?: number;           // convHistory.length → Kantendicke
 }

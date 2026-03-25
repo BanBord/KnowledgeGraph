@@ -2,13 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Immer dunkel — kein System-Theme-Switch */
+/* ── CSS-Variablen für Werte, die Tailwind nicht direkt erreicht ─────────── */
+/* (SVG-Farben, React Flow, Edges) */
+
 :root {
+  /* Dark-Mode Variablen (Standard) */
+  --accent:        #7c6af7;
+  --accent2:       #4f9cf9;
+  --border-color:  #333333;
+  --canvas-bg:     #0d0d0d;
+  --surface-bg:    #1a1a1a;
+  --text-dim:      #555555;
+  --edge-default:  #555555;
+  --dot-color:     #333333;
+
+  /* Bekanntheitswärme für Kontakt-Nodes (knownBy.length) */
+  --familiarity-0: #1e1e1e;
+  --familiarity-1: #1a2a28;
+  --familiarity-2: #1e1f33;
+  --familiarity-3: #241a38;
+}
+
+/* Light-Mode Variablen */
+html:not(.dark) {
+  --accent:        #4a3fc4;
+  --accent2:       #1558b0;
+  --border-color:  #c8c1b8;
+  --canvas-bg:     #f5f3ef;
+  --surface-bg:    #ede9e3;
+  --text-dim:      #8a8278;
+  --edge-default:  #b0a89e;
+  --dot-color:     #c8c1b8;
+  color-scheme:    light;
+}
+
+html.dark {
   color-scheme: dark;
 }
 
 body {
-  /* bg-canvas und text-text kommen aus tailwind.config.ts */
   font-family: var(--font-geist-sans), sans-serif;
 }
 
@@ -17,8 +49,63 @@ body {
   background: transparent;
 }
 
+/* React Flow Controls: theme-aware */
+.react-flow__controls {
+  background: var(--surface-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: none;
+}
+.react-flow__controls-button {
+  background: var(--surface-bg);
+  border-bottom: 1px solid var(--border-color);
+  fill: var(--text-dim);
+  transition: background 150ms, fill 150ms;
+  border-radius: 0;
+}
+.react-flow__controls-button:hover {
+  background: var(--canvas-bg);
+}
+.react-flow__controls-button:last-child {
+  border-bottom: none;
+  border-radius: 0 0 8px 8px;
+}
+.react-flow__controls-button:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+/* ── Animationen ─────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-fade-up-delay-1 {
+  animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+.animate-fade-up-delay-2 {
+  animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
+}
+
+/* ── prefers-reduced-motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Hilfklassen ─────────────────────────────────────────────────────────── */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
   }
 }

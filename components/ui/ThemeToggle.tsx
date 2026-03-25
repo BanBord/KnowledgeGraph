@@ -9,28 +9,28 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      aria-label={isLight ? 'Dunkelmodus aktivieren' : 'Hellmodus aktivieren'}
+      aria-label={isLight ? 'Zu Dunkelmodus wechseln' : 'Zu Hellmodus wechseln'}
       aria-pressed={isLight}
-      className="flex items-center gap-2 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-      style={{ color: 'var(--color-text-dim)' }}
+      className="
+        flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium
+        border transition-colors duration-150
+        text-textDim border-border hover:text-text hover:border-border/80
+        dark:text-textDim dark:border-border dark:hover:text-text
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent
+        not-dark:text-[#8a8278] not-dark:border-[#c8c1b8] not-dark:hover:text-[#1a1814]
+        select-none
+      "
     >
-      {/* Sun / Moon als reine SVGs — keine Lucide-Dependency */}
       {isLight ? (
-        // Moon-Icon
-        <svg
-          width="13" height="13" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
-          aria-hidden
-        >
+        /* Moon */
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       ) : (
-        // Sun-Icon
-        <svg
-          width="13" height="13" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
-          aria-hidden
-        >
+        /* Sun */
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
           <circle cx="12" cy="12" r="5" />
           <line x1="12" y1="1" x2="12" y2="3" />
           <line x1="12" y1="21" x2="12" y2="23" />
@@ -42,12 +42,7 @@ export function ThemeToggle() {
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
         </svg>
       )}
-      <span
-        className="text-[10px] tracking-[0.15em] uppercase font-medium transition-colors duration-150 group-hover:text-t-main"
-        style={{ color: 'var(--color-text-dim)' }}
-      >
-        {isLight ? 'Dunkel' : 'Hell'}
-      </span>
+      <span>{isLight ? 'Dunkel' : 'Hell'}</span>
     </button>
   );
 }

@@ -19,7 +19,7 @@ import { TopicNode as TopicNodeComponent } from './TopicNode';
 import { ContactNode as ContactNodeComponent } from './ContactNode';
 import { NetworkEdge } from './NetworkEdge';
 import { topicNodes, contacts, getContactById } from '@/lib/mock-data';
-import { TopicNode, Contact, TopicNodeData, ContactNodeData } from '@/types';
+import { TopicNode, Contact, TopicNodeData, ContactNodeData, NetworkEdgeData } from '@/types';
 
 // Zoom-Schwellwert: unter diesem Wert sind Kontakt-Nodes unsichtbar
 const CONTACT_VISIBLE_ZOOM = 1.1;
@@ -55,6 +55,7 @@ function buildTopicFlowNode(
       topicId: topic.id,
       contactCount: topic.contactIds.length,
       isActive: topic.id === activeTopicId,
+      isHub: !topic.parentId,
     } satisfies TopicNodeData,
   };
 }
@@ -84,6 +85,7 @@ function buildContactFlowNodes(
         data: {
           contact,
           isActive: cid === activeContactId,
+          familiarityLevel: contact.knownBy.length,
         } satisfies ContactNodeData,
       } satisfies Node;
     })
@@ -111,7 +113,7 @@ function buildTopicEdges(topicIds: string[], activeTopicId: string | null): Edge
         source: `topic-${id}`,
         target: `topic-${relId}`,
         type: 'network',
-        data: { active: isActive },
+        data: { active: isActive, weight: 1 } satisfies NetworkEdgeData,
       });
     });
   });
@@ -122,13 +124,17 @@ function buildTopicEdges(topicIds: string[], activeTopicId: string | null): Edge
 // Hilfsfunktion: Edges von aktivem Topic zu Kontakten
 function buildContactEdges(topic: TopicNode, visible: boolean): Edge[] {
   if (!visible) return [];
-  return topic.contactIds.map((cid) => ({
-    id: `edge-topic-contact-${cid}`,
-    source: `topic-${topic.id}`,
-    target: `contact-${cid}`,
-    type: 'network',
-    data: { active: false },
-  }));
+  return topic.contactIds.map((cid) => {
+    const contact = getContactById(cid);
+    const weight = contact?.convHistory.length ?? 1;
+    return {
+      id: `edge-topic-contact-${cid}`,
+      source: `topic-${topic.id}`,
+      target: `contact-${cid}`,
+      type: 'network',
+      data: { active: false, weight } satisfies NetworkEdgeData,
+    };
+  });
 }
 
 // Inner-Komponente, die useViewport nutzt (muss innerhalb von ReactFlow sein)

@@ -7,22 +7,19 @@ export type Theme = 'dark' | 'light';
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>('dark');
 
+  // Beim Mount: gespeichertes Theme lesen und anwenden
   useEffect(() => {
-    // Gespeichertes Theme laden
-    const saved = localStorage.getItem('theme') as Theme | null;
-    const initial = saved ?? 'dark';
-    applyTheme(initial);
-    setTheme(initial);
+    const saved = (localStorage.getItem('theme') as Theme | null) ?? 'dark';
+    applyTheme(saved);
+    setTheme(saved);
   }, []);
 
   function applyTheme(t: Theme) {
     const root = document.documentElement;
-    if (t === 'light') {
-      root.classList.add('light');
-      root.classList.remove('dark');
-    } else {
+    if (t === 'dark') {
       root.classList.add('dark');
-      root.classList.remove('light');
+    } else {
+      root.classList.remove('dark');
     }
   }
 

@@ -6,20 +6,23 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  // Klassenwechsel via .dark auf <html> steuert das Theme
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        canvas:      '#0d0d0d',   // Haupt-Canvas-Hintergrund (fast schwarz)
-        surface:     '#1a1a1a',   // Panels, Sidebar, Cards
-        surface2:    '#252525',   // Karten-Hover, erhöhte Elemente
-        border:      '#333333',   // Dezente Trennlinien
-        accent:      '#7c6af7',   // Lila-Akzent (Obsidian-Lila) — aktive Nodes
-        accent2:     '#4f9cf9',   // Blau für Links/Connections
-        nodeDefault: '#1e1e1e',   // Normaler Node-Hintergrund
-        text:        '#e8e8e8',   // Primärer Text
-        textMuted:   '#888888',   // Nebentext, Labels
-        textDim:     '#555555',   // Sehr dezenter Text
-        tagDefault:  '#2a2a3e',   // Default Tag-Hintergrund
+        // Dark-Mode Werte (Standard)
+        canvas:      '#0d0d0d',
+        surface:     '#1a1a1a',
+        surface2:    '#252525',
+        border:      '#333333',
+        accent:      '#7c6af7',
+        accent2:     '#4f9cf9',
+        nodeDefault: '#1e1e1e',
+        text:        '#e8e8e8',
+        textMuted:   '#888888',
+        textDim:     '#555555',
+        tagDefault:  '#2a2a3e',
       },
       fontFamily: {
         sans: ['var(--font-geist-sans)', 'sans-serif'],
