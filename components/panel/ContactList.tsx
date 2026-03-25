@@ -32,7 +32,7 @@ export function ContactList({
   return (
     <div className="flex flex-col gap-2">
       <div className="px-1 pb-1">
-        <span className="text-[11px] text-textDim uppercase tracking-widest font-medium">
+        <span className="text-[11px] text-text uppercase tracking-widest font-medium">
           {contacts.length} Kontakt{contacts.length !== 1 ? 'e' : ''} in diesem Thema
         </span>
       </div>

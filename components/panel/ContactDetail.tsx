@@ -93,6 +93,43 @@ export function ContactDetail({ contact, onBack }: ContactDetailProps) {
       {/* Scrollbarer Inhalt */}
       <div className="flex-1 overflow-y-auto mt-4 space-y-5 pr-0.5">
 
+        {/* Kontaktdaten — zuerst, wie in Figma */}
+        {(contact.email || contact.phone) && (
+          <div>
+            <p className="text-[11px] text-text uppercase tracking-widest font-medium mb-2">
+              Kontakt
+            </p>
+            <div className="flex flex-col gap-2">
+              {contact.email && (
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="flex items-center gap-2.5 group"
+                >
+                  <div className="w-7 h-7 rounded-md bg-surface2 border border-border flex items-center justify-center flex-shrink-0 group-hover:border-accent/50 transition-colors">
+                    <Mail size={12} className="text-textMuted group-hover:text-accent transition-colors" />
+                  </div>
+                  <span className="text-xs text-[#fff6f6] group-hover:text-accent transition-colors truncate">
+                    {contact.email}
+                  </span>
+                </a>
+              )}
+              {contact.phone && (
+                <a
+                  href={`tel:${contact.phone}`}
+                  className="flex items-center gap-2.5 group"
+                >
+                  <div className="w-7 h-7 rounded-md bg-surface2 border border-border flex items-center justify-center flex-shrink-0 group-hover:border-accent2/50 transition-colors">
+                    <Phone size={12} className="text-textMuted group-hover:text-accent2 transition-colors" />
+                  </div>
+                  <span className="text-xs text-[#fff6f6] group-hover:text-accent2 transition-colors">
+                    {contact.phone}
+                  </span>
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Expertise */}
         {contact.expertise.length > 0 && (
           <div>
@@ -107,11 +144,11 @@ export function ContactDetail({ contact, onBack }: ContactDetailProps) {
           </div>
         )}
 
-        {/* Bekannt bei */}
+        {/* Zum Netzwerk hinzugefügt von */}
         {knownByRedakteure.length > 0 && (
           <div>
-            <p className="text-[11px] text-textDim uppercase tracking-widest font-medium mb-2">
-              Bekannt bei
+            <p className="text-[11px] text-text uppercase tracking-widest font-medium mb-2">
+              Zum Netzwerk hinzugefügt von
             </p>
             <div className="flex flex-col gap-2">
               {knownByRedakteure.map((r) => (
@@ -124,48 +161,15 @@ export function ContactDetail({ contact, onBack }: ContactDetailProps) {
                 </div>
               ))}
             </div>
+            {/* Herkunft direkt unter dem Redakteur */}
+            {contact.sourceNote && (
+              <p className="text-xs text-textMuted leading-relaxed mt-2">{contact.sourceNote}</p>
+            )}
           </div>
         )}
 
-        {/* Kontaktdaten */}
-        {(contact.email || contact.phone) && (
-          <div>
-            <p className="text-[11px] text-textDim uppercase tracking-widest font-medium mb-2">
-              Kontakt
-            </p>
-            <div className="flex flex-col gap-2">
-              {contact.email && (
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="flex items-center gap-2.5 group"
-                >
-                  <div className="w-7 h-7 rounded-md bg-surface2 border border-border flex items-center justify-center flex-shrink-0 group-hover:border-accent/50 transition-colors">
-                    <Mail size={12} className="text-textMuted group-hover:text-accent transition-colors" />
-                  </div>
-                  <span className="text-xs text-textMuted group-hover:text-accent transition-colors truncate">
-                    {contact.email}
-                  </span>
-                </a>
-              )}
-              {contact.phone && (
-                <a
-                  href={`tel:${contact.phone}`}
-                  className="flex items-center gap-2.5 group"
-                >
-                  <div className="w-7 h-7 rounded-md bg-surface2 border border-border flex items-center justify-center flex-shrink-0 group-hover:border-accent2/50 transition-colors">
-                    <Phone size={12} className="text-textMuted group-hover:text-accent2 transition-colors" />
-                  </div>
-                  <span className="text-xs text-textMuted group-hover:text-accent2 transition-colors">
-                    {contact.phone}
-                  </span>
-                </a>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Herkunft */}
-        {contact.sourceNote && (
+        {/* Herkunft — nur wenn kein knownBy vorhanden */}
+        {contact.sourceNote && knownByRedakteure.length === 0 && (
           <div>
             <p className="text-[11px] text-textDim uppercase tracking-widest font-medium mb-1.5">
               Herkunft

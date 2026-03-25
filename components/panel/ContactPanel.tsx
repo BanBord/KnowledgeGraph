@@ -39,7 +39,10 @@ export function ContactPanel({
       <div className="flex items-center justify-between px-4 py-3 border-b border-border flex-shrink-0">
         <div className="min-w-0">
           {activeContact ? (
-            <p className="text-xs text-textMuted font-medium truncate">Kontakt-Detail</p>
+            <>
+              <p className="text-xs text-textDim">Kontakt</p>
+              <p className="text-sm font-semibold text-text truncate">{activeContact.name}</p>
+            </>
           ) : activeTopic ? (
             <>
               <p className="text-xs text-textDim">Thema</p>
