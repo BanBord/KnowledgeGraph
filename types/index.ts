@@ -76,4 +76,5 @@ export interface ContactNodeData {
 export interface NetworkEdgeData {
   active?: boolean;
   weight?: number;           // convHistory.length → Kantendicke
+  edgeKind?: 'topic-topic' | 'topic-contact' | 'person-person';
 }

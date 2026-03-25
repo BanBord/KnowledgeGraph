@@ -573,36 +573,37 @@ export const persons: Person[] = [
 
 export const topicNodes: TopicNode[] = [
   // Szenario 1: Vitamin Mangel (erweitertes Netzwerk)
-  { id: 't1', label: 'Gesundheit', relatedTopics: ['t2', 't3', 't4', 't17', 't18', 't19', 't20', 't21', 't22'], contactIds: [], position: { x: 400, y: 300 } },
-  { id: 't2', label: 'Vitaminmangel', parentId: 't1', relatedTopics: ['t1', 't3', 't17', 't18'], contactIds: ['c1', 'c2', 'c4', 'c13', 'c15', 'p7', 'p8'], position: { x: 200, y: 150 } },
-  { id: 't3', label: 'Medikamente & Supplements', parentId: 't1', relatedTopics: ['t1', 't2', 't5', 't20', 't21'], contactIds: ['c2', 'c3', 'c17', 'c18'], position: { x: 600, y: 150 } },
-  { id: 't4', label: 'Haustiergesundheit', parentId: 't1', relatedTopics: ['t1', 't22'], contactIds: ['p4'], position: { x: 700, y: 400 } },
+  // Positionen werden von D3-Force berechnet — alle starten bei 0,0
+  { id: 't1', label: 'Gesundheit', relatedTopics: ['t2', 't3', 't4', 't17', 't18', 't19', 't20', 't21', 't22'], contactIds: [], position: { x: 0, y: 0 } },
+  { id: 't2', label: 'Vitaminmangel', parentId: 't1', relatedTopics: ['t1', 't3', 't17', 't18'], contactIds: ['c1', 'c2', 'c4', 'c13', 'c15', 'p7', 'p8'], position: { x: 0, y: 0 } },
+  { id: 't3', label: 'Medikamente & Supplements', parentId: 't1', relatedTopics: ['t1', 't2', 't5', 't20', 't21'], contactIds: ['c2', 'c3', 'c17', 'c18'], position: { x: 0, y: 0 } },
+  { id: 't4', label: 'Haustiergesundheit', parentId: 't1', relatedTopics: ['t1', 't22'], contactIds: ['p4'], position: { x: 0, y: 0 } },
 
   // Szenario 2: Vitamin Startup
-  { id: 't5', label: 'Wirtschaft', relatedTopics: ['t6', 't7', 't8', 't9'], contactIds: [], position: { x: 400, y: 300 } },
-  { id: 't6', label: 'Vitamin Startup', parentId: 't5', relatedTopics: ['t5', 't7'], contactIds: ['c3', 'c6', 'c7'], position: { x: 200, y: 150 } },
-  { id: 't7', label: 'Chemie & Produktion', parentId: 't5', relatedTopics: ['t5', 't6'], contactIds: ['c5', 'c6'], position: { x: 600, y: 150 } },
-  { id: 't8', label: 'Geschäftsführung', parentId: 't5', relatedTopics: ['t5', 't9'], contactIds: ['c6', 'c8'], position: { x: 200, y: 450 } },
-  { id: 't9', label: 'BWL & Finanzen', parentId: 't5', relatedTopics: ['t5', 't8'], contactIds: ['c7', 'c8'], position: { x: 600, y: 450 } },
+  { id: 't5', label: 'Wirtschaft', relatedTopics: ['t6', 't7', 't8', 't9'], contactIds: [], position: { x: 0, y: 0 } },
+  { id: 't6', label: 'Vitamin Startup', parentId: 't5', relatedTopics: ['t5', 't7'], contactIds: ['c3', 'c6', 'c7'], position: { x: 0, y: 0 } },
+  { id: 't7', label: 'Chemie & Produktion', parentId: 't5', relatedTopics: ['t5', 't6'], contactIds: ['c5', 'c6'], position: { x: 0, y: 0 } },
+  { id: 't8', label: 'Geschäftsführung', parentId: 't5', relatedTopics: ['t5', 't9'], contactIds: ['c6', 'c8'], position: { x: 0, y: 0 } },
+  { id: 't9', label: 'BWL & Finanzen', parentId: 't5', relatedTopics: ['t5', 't8'], contactIds: ['c7', 'c8'], position: { x: 0, y: 0 } },
 
   // Szenario 3: Lokalpolitik
-  { id: 't10', label: 'Lokalpolitik', relatedTopics: ['t11', 't12', 't13'], contactIds: [], position: { x: 400, y: 300 } },
-  { id: 't11', label: 'Stadtrat', parentId: 't10', relatedTopics: ['t10', 't12'], contactIds: ['c9', 'c10'], position: { x: 200, y: 150 } },
-  { id: 't12', label: 'Bauleitplanung', parentId: 't10', relatedTopics: ['t10', 't11', 't13'], contactIds: ['c10', 'c11', 'c12'], position: { x: 600, y: 150 } },
-  { id: 't13', label: 'Verwaltung & Recht', parentId: 't10', relatedTopics: ['t10', 't12'], contactIds: ['c11', 'c12'], position: { x: 400, y: 500 } },
+  { id: 't10', label: 'Lokalpolitik', relatedTopics: ['t11', 't12', 't13'], contactIds: [], position: { x: 0, y: 0 } },
+  { id: 't11', label: 'Stadtrat', parentId: 't10', relatedTopics: ['t10', 't12'], contactIds: ['c9', 'c10'], position: { x: 0, y: 0 } },
+  { id: 't12', label: 'Bauleitplanung', parentId: 't10', relatedTopics: ['t10', 't11', 't13'], contactIds: ['c10', 'c11', 'c12'], position: { x: 0, y: 0 } },
+  { id: 't13', label: 'Verwaltung & Recht', parentId: 't10', relatedTopics: ['t10', 't12'], contactIds: ['c11', 'c12'], position: { x: 0, y: 0 } },
 
   // Szenario 1 Erweiterung: Vitamin Mangel — große Netzwerk-Topics
-  { id: 't17', label: 'Ernährungswissenschaft', parentId: 't1', relatedTopics: ['t1', 't2', 't18'], contactIds: ['c1', 'c13', 'c14', 'p7', 'p8'], position: { x: 100, y: 300 } },
-  { id: 't18', label: 'Hausarztmedizin', parentId: 't1', relatedTopics: ['t1', 't17', 't19'], contactIds: ['c15', 'c4', 'p7'], position: { x: 300, y: 500 } },
-  { id: 't19', label: 'Krankenkassen & Prävention', parentId: 't1', relatedTopics: ['t1', 't18'], contactIds: ['c16', 'c1'], position: { x: 600, y: 500 } },
-  { id: 't20', label: 'Social Media & Health', parentId: 't1', relatedTopics: ['t1', 't3'], contactIds: ['c17', 'c14'], position: { x: 750, y: 300 } },
-  { id: 't21', label: 'Produktion & Hersteller', parentId: 't1', relatedTopics: ['t3', 't6'], contactIds: ['c18', 'c2'], position: { x: 500, y: 150 } },
-  { id: 't22', label: 'Haustiergesundheit', parentId: 't1', relatedTopics: ['t1', 't17'], contactIds: ['p4', 'p3'], position: { x: 700, y: 400 } },
+  { id: 't17', label: 'Ernährungswissenschaft', parentId: 't1', relatedTopics: ['t1', 't2', 't18'], contactIds: ['c1', 'c13', 'c14', 'p7', 'p8'], position: { x: 0, y: 0 } },
+  { id: 't18', label: 'Hausarztmedizin', parentId: 't1', relatedTopics: ['t1', 't17', 't19'], contactIds: ['c15', 'c4', 'p7'], position: { x: 0, y: 0 } },
+  { id: 't19', label: 'Krankenkassen & Prävention', parentId: 't1', relatedTopics: ['t1', 't18'], contactIds: ['c16', 'c1'], position: { x: 0, y: 0 } },
+  { id: 't20', label: 'Social Media & Health', parentId: 't1', relatedTopics: ['t1', 't3'], contactIds: ['c17', 'c14'], position: { x: 0, y: 0 } },
+  { id: 't21', label: 'Produktion & Hersteller', parentId: 't1', relatedTopics: ['t3', 't6'], contactIds: ['c18', 'c2'], position: { x: 0, y: 0 } },
+  { id: 't22', label: 'Haustiergesundheit', parentId: 't1', relatedTopics: ['t1', 't17'], contactIds: ['p4', 'p3'], position: { x: 0, y: 0 } },
 
   // Szenario 4: Automotive (echte Personen)
-  { id: 't14', label: 'Industrie & Technologie', relatedTopics: ['t15', 't16'], contactIds: [], position: { x: 400, y: 300 } },
-  { id: 't15', label: 'Automotive', parentId: 't14', relatedTopics: ['t14', 't16'], contactIds: ['p1', 'p2'], position: { x: 200, y: 150 } },
-  { id: 't16', label: 'Hardware & Sensoren', parentId: 't14', relatedTopics: ['t14', 't15'], contactIds: ['p1', 'p3'], position: { x: 600, y: 150 } },
+  { id: 't14', label: 'Industrie & Technologie', relatedTopics: ['t15', 't16'], contactIds: [], position: { x: 0, y: 0 } },
+  { id: 't15', label: 'Automotive', parentId: 't14', relatedTopics: ['t14', 't16'], contactIds: ['p1', 'p2'], position: { x: 0, y: 0 } },
+  { id: 't16', label: 'Hardware & Sensoren', parentId: 't14', relatedTopics: ['t14', 't15'], contactIds: ['p1', 'p3'], position: { x: 0, y: 0 } },
 ];
 
 // --- Suchszenarien ---
