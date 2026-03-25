@@ -7,8 +7,8 @@ export function EmptyState() {
         <Search size={28} className="text-textDim" />
       </div>
       <div className="text-center">
-        <p className="text-textMuted text-sm">Kein Thema ausgewählt</p>
-        <p className="text-textDim text-xs mt-1">Suche oben, um den Graphen zu laden</p>
+        <p className="text-textMuted text-sm">Keine Ergebnisse gefunden</p>
+        <p className="text-textDim text-xs mt-1">Versuche einen anderen Suchbegriff</p>
       </div>
     </div>
   );

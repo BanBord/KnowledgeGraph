@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { SearchCommand } from '@/components/search/SearchCommand';
-import { SearchSuggestions } from '@/components/search/SearchSuggestions';
 
 export default function HomePage() {
   const router = useRouter();
@@ -41,9 +40,6 @@ export default function HomePage() {
               Redaktions<span className="text-accent">Netz</span>
             </span>
           </div>
-          <p className="text-sm text-textDim text-center leading-relaxed max-w-xs">
-            Journalistisches Kontaktnetzwerk für Lokalredaktionen
-          </p>
         </div>
 
         {/* Suchfeld */}
@@ -51,8 +47,6 @@ export default function HomePage() {
           <SearchCommand onSearch={handleSearch} autoFocus />
         </div>
 
-        {/* Schnellzugriff-Pills */}
-        <SearchSuggestions onSelect={handleSearch} />
       </div>
     </main>
   );

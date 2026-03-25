@@ -2,27 +2,9 @@
 
 import { memo } from 'react';
 import { Handle, Position, NodeProps } from '@xyflow/react';
-import { User, Building2, FlaskConical, Newspaper, GraduationCap } from 'lucide-react';
+import { User, Building2, FlaskConical, Newspaper, GraduationCap, Landmark } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { ContactNodeData, ContactType } from '@/types';
-
-const TYPE_ICONS: Record<ContactType, React.ElementType> = {
-  expert:      FlaskConical,
-  institution: Building2,
-  company:     Building2,
-  person:      User,
-  journalist:  Newspaper,
-  student:     GraduationCap,
-};
-
-const TYPE_ICON_COLORS: Record<ContactType, string> = {
-  expert:      'text-[#7c6af7]',
-  institution: 'text-[#4f9cf9]',
-  company:     'text-[#4fc97f]',
-  person:      'text-[#f9a84f]',
-  journalist:  'text-[#f94f4f]',
-  student:     'text-[#f9e44f]',
-};
 
 const TYPE_BORDER_COLORS: Record<ContactType, string> = {
   expert:      '#7c6af7',
@@ -31,6 +13,15 @@ const TYPE_BORDER_COLORS: Record<ContactType, string> = {
   person:      '#f9a84f',
   journalist:  '#f94f4f',
   student:     '#f9e44f',
+};
+
+const TYPE_ICONS: Record<ContactType, React.ElementType> = {
+  expert:      FlaskConical,
+  institution: Landmark,
+  company:     Building2,
+  person:      User,
+  journalist:  Newspaper,
+  student:     GraduationCap,
 };
 
 // Hintergrundfarbe nach Bekanntheit
@@ -42,22 +33,13 @@ const FAMILIARITY_BG: Record<number, string> = {
 
 export const ContactNode = memo(function ContactNode({ data, selected }: NodeProps) {
   const { contact, isActive, familiarityLevel } = data as unknown as ContactNodeData;
-  const Icon = TYPE_ICONS[contact.type] ?? User;
-  const iconColor = TYPE_ICON_COLORS[contact.type];
-  const borderColor = TYPE_BORDER_COLORS[contact.type];
+  const typeColor = TYPE_BORDER_COLORS[contact.type];
+  const TypeIcon = TYPE_ICONS[contact.type] ?? User;
 
   const bgColor = familiarityLevel >= 3 ? '#241a38' : (FAMILIARITY_BG[familiarityLevel] ?? '#1e1e1e');
 
-  // Vorname-Initial + Nachname für kompakte aber lesbare Darstellung
-  const nameParts = contact.name.replace(/^(Dr\.|Prof\.|Prof\. Dr\.)/, '').trim().split(' ');
-  const lastName = nameParts[nameParts.length - 1];
-  const firstInitial = nameParts[0]?.[0];
-  const shortName = firstInitial && nameParts.length > 1 ? `${firstInitial}. ${lastName}` : lastName;
-
-  // Familiarity glow: bekannte Kontakte leuchten subtil weiß
-  const familiarityGlow = familiarityLevel >= 2
-    ? 'shadow-[0_0_8px_rgba(255,255,255,0.08)]'
-    : '';
+  // Rolle kürzen: bei " – " oder " - " aufteilen, nur erstes Segment
+  const shortRole = contact.role.split(/\s[–-]\s/)[0];
 
   return (
     <>
@@ -66,38 +48,41 @@ export const ContactNode = memo(function ContactNode({ data, selected }: NodePro
       <Handle type="target" position={Position.Right} className="!opacity-0 !w-0 !h-0 !min-w-0 !min-h-0" />
       <Handle type="target" position={Position.Bottom} className="!opacity-0 !w-0 !h-0 !min-w-0 !min-h-0" />
 
-      {/* Tooltip: erscheint beim Hover über dem Node (CSS-only) */}
-      <div className="group relative">
+      <div
+        style={{
+          backgroundColor: bgColor,
+          borderColor: isActive || selected ? '#7c6af7' : typeColor,
+        }}
+        className={cn(
+          'min-w-[120px] max-w-[160px] rounded-lg border flex items-center gap-2 px-2.5 py-2',
+          'transition-all duration-200 cursor-grab active:cursor-grabbing select-none',
+          isActive || selected
+            ? 'border-2 shadow-[0_0_16px_rgba(124,106,247,0.5),0_0_30px_rgba(124,106,247,0.15)]'
+            : 'border hover:brightness-110',
+        )}
+      >
+        {/* Typ-Indikator: farbiger Punkt links */}
         <div
-          style={{
-            backgroundColor: bgColor,
-            borderColor: isActive || selected ? '#7c6af7' : borderColor,
-          }}
-          className={cn(
-            'w-[68px] h-[68px] rounded-full border-2 flex flex-col items-center justify-center',
-            'transition-all duration-200 cursor-grab active:cursor-grabbing select-none',
-            isActive || selected
-              ? 'shadow-[0_0_16px_rgba(124,106,247,0.5),0_0_30px_rgba(124,106,247,0.15)]'
-              : cn('hover:brightness-125', familiarityGlow),
-          )}
-        >
-          <div className={cn('flex-shrink-0', iconColor)}>
-            <Icon size={14} />
+          className="flex-shrink-0 w-2 h-2 rounded-full"
+          style={{ backgroundColor: typeColor }}
+        />
+
+        {/* Name + Rolle */}
+        <div className="min-w-0 flex-1">
+          <div className="text-[11px] font-medium text-text leading-tight truncate">
+            {contact.name}
           </div>
-          <span className="text-[9px] font-medium text-text leading-tight text-center mt-1 px-1 line-clamp-2 max-w-[58px]">
-            {shortName}
-          </span>
+          <div className="text-[9px] text-textMuted leading-tight mt-0.5 truncate">
+            {shortRole}
+          </div>
         </div>
 
-        {/* CSS-only Tooltip — zeigt Rolle beim Hover */}
-        <div className={cn(
-          'absolute top-full left-1/2 -translate-x-1/2 mt-1.5 z-50',
-          'px-2 py-1 rounded bg-surface2 border border-border/80',
-          'text-[10px] text-textMuted whitespace-nowrap pointer-events-none',
-          'opacity-0 group-hover:opacity-100 transition-opacity duration-150',
-          'max-w-[140px] truncate text-center'
-        )}>
-          {contact.role}
+        {/* Typ-Icon rechts */}
+        <div
+          className="flex-shrink-0 p-1 rounded"
+          style={{ color: typeColor, backgroundColor: `${typeColor}18` }}
+        >
+          <TypeIcon size={10} />
         </div>
       </div>
 

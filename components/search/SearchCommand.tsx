@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { Search, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import { SEARCH_SUGGESTIONS } from '@/lib/mock-data';
 
 interface SearchCommandProps {
   onSearch: (query: string) => void;
@@ -30,13 +29,6 @@ export function SearchCommand({ onSearch, initialValue = '', autoFocus, compact 
     }
   }
 
-  function handleSuggestionClick(suggestion: string) {
-    setValue(suggestion);
-    onSearch(suggestion);
-  }
-
-  const showSuggestions = focused && value.length === 0 && !compact;
-
   return (
     <div className="relative w-full">
       <div
@@ -60,8 +52,8 @@ export function SearchCommand({ onSearch, initialValue = '', autoFocus, compact 
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={() => setFocused(true)}
-          onBlur={() => setTimeout(() => setFocused(false), 150)}
-          placeholder={compact ? 'Thema suchen…' : 'Thema eingeben, z.B. Vitamin Mangel…'}
+          onBlur={() => setFocused(false)}
+          placeholder={compact ? 'Thema suchen…' : 'Thema eingeben…'}
           className={cn(
             'flex-1 bg-transparent outline-none text-text placeholder:text-textDim',
             compact ? 'text-sm' : 'text-xl'
@@ -77,27 +69,6 @@ export function SearchCommand({ onSearch, initialValue = '', autoFocus, compact 
           </button>
         )}
       </div>
-
-      {/* Vorschläge — nur auf Startseite, wenn leer */}
-      {showSuggestions && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-surface border border-border rounded-xl overflow-hidden shadow-xl z-50">
-          <div className="px-4 py-2 border-b border-border">
-            <span className="text-[11px] text-textDim uppercase tracking-widest font-medium">
-              Vorschläge
-            </span>
-          </div>
-          {SEARCH_SUGGESTIONS.map((suggestion) => (
-            <button
-              key={suggestion}
-              onMouseDown={() => handleSuggestionClick(suggestion)}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-surface2 transition-colors group"
-            >
-              <Search size={13} className="text-textDim group-hover:text-accent transition-colors" />
-              <span className="text-sm text-text">{suggestion}</span>
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

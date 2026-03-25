@@ -1,4 +1,5 @@
 // Alle Mock-Daten zentral — keine Daten in Komponenten hartcodieren
+import Fuse from 'fuse.js';
 import { Contact, Person, Redakteur, TopicNode, SearchScenario } from '@/types';
 
 // --- Redakteure ---
@@ -664,9 +665,106 @@ export function getRelatedPersons(personId: string): Person[] {
   return person.relatedPersonIds.map((id) => getPersonById(id)).filter((p): p is Person => !!p);
 }
 
+// --- Such-Index für Fuzzy-Matching ---
+
+interface SearchIndexEntry {
+  label: string;
+  scenarioQuery: string;
+  topicIds: string[];
+  highlightedTopicId?: string;
+}
+
+// Alle durchsuchbaren Begriffe pro Szenario aggregieren
+function buildSearchIndex(): SearchIndexEntry[] {
+  const entries: SearchIndexEntry[] = [];
+
+  for (const scenario of searchScenarios) {
+    const scenarioTopics = topicNodes.filter((t) => scenario.topicIds.includes(t.id));
+    const contactIdsInScenario = new Set(scenarioTopics.flatMap((t) => t.contactIds));
+    const contactsInScenario = allContacts.filter((c) => contactIdsInScenario.has(c.id));
+
+    // Szenario-Query selbst
+    entries.push({
+      label: scenario.query,
+      scenarioQuery: scenario.query,
+      topicIds: scenario.topicIds,
+      highlightedTopicId: scenario.highlightedTopicId,
+    });
+
+    // Topic-Labels
+    for (const topic of scenarioTopics) {
+      entries.push({
+        label: topic.label,
+        scenarioQuery: scenario.query,
+        topicIds: scenario.topicIds,
+        highlightedTopicId: topic.id,
+      });
+    }
+
+    // Kontaktnamen + Rollen + Expertise-Tags
+    for (const contact of contactsInScenario) {
+      entries.push({
+        label: contact.name,
+        scenarioQuery: scenario.query,
+        topicIds: scenario.topicIds,
+        highlightedTopicId: scenario.highlightedTopicId,
+      });
+      entries.push({
+        label: contact.role,
+        scenarioQuery: scenario.query,
+        topicIds: scenario.topicIds,
+        highlightedTopicId: scenario.highlightedTopicId,
+      });
+      for (const tag of contact.expertise) {
+        entries.push({
+          label: tag,
+          scenarioQuery: scenario.query,
+          topicIds: scenario.topicIds,
+          highlightedTopicId: scenario.highlightedTopicId,
+        });
+      }
+    }
+  }
+
+  return entries;
+}
+
+// Fuse-Instanz lazy initialisieren (einmalig gecacht)
+let fuseInstance: Fuse<SearchIndexEntry> | null = null;
+
+function getFuse(): Fuse<SearchIndexEntry> {
+  if (!fuseInstance) {
+    fuseInstance = new Fuse(buildSearchIndex(), {
+      keys: ['label'],
+      threshold: 0.4,
+      includeScore: true,
+      minMatchCharLength: 2,
+    });
+  }
+  return fuseInstance;
+}
+
 export function findScenarioByQuery(query: string): SearchScenario | undefined {
-  const lower = query.toLowerCase().trim();
-  return searchScenarios.find((s) => s.query.toLowerCase().includes(lower) || lower.includes(s.query.toLowerCase()));
+  const trimmed = query.trim();
+  if (!trimmed) return undefined;
+
+  // 1. Exakter Substring-Match auf Szenario-Queries (wie bisher)
+  const lower = trimmed.toLowerCase();
+  const exact = searchScenarios.find(
+    (s) => s.query.toLowerCase().includes(lower) || lower.includes(s.query.toLowerCase())
+  );
+  if (exact) return exact;
+
+  // 2. Fuzzy-Match über den Search-Index
+  const results = getFuse().search(trimmed);
+  if (results.length === 0) return undefined;
+
+  const best = results[0].item;
+  return {
+    query: best.scenarioQuery,
+    topicIds: best.topicIds,
+    highlightedTopicId: best.highlightedTopicId,
+  };
 }
 
 export const SEARCH_SUGGESTIONS = [
